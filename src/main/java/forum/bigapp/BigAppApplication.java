@@ -10,5 +10,3 @@ public class BigAppApplication {
         SpringApplication.run(BigAppApplication.class, args);
     }
 }
-
-//hello word
