@@ -1,34 +1,34 @@
 package forum.bigapp.service.impl;
 
-import forum.bigapp.model.User;
-import forum.bigapp.repository.UserRepository;
-import forum.bigapp.service.UserService;
+import forum.bigapp.model.Comment;
+import forum.bigapp.repository.CommentRepository;
+import forum.bigapp.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
-    private UserRepository repository;
+public class CommentServiceImpl implements CommentService {
+    private CommentRepository repository;
 
     @Override
-    public User save(User entity) {
+    public Comment save(Comment entity) {
         return repository.save(entity);
     }
 
     @Override
-    public User getByID(Long id) {
+    public Comment getByID(Long id) {
         return repository.getReferenceById(id);
     }
 
     @Override
-    public User update(User entity) {
+    public Comment update(Comment entity) {
         return repository.save(entity);
     }
 
     @Override
-    public List<User> findAll() {
+    public List<Comment> findAll() {
         return repository.findAll();
     }
 
