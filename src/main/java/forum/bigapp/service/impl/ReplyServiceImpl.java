@@ -5,13 +5,13 @@ import forum.bigapp.repository.ReplyRepository;
 import forum.bigapp.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ReplyServiceImpl implements ReplyService {
-
     private ReplyRepository repository;
+
     @Override
     public Reply save(Reply entity) {
         return repository.save(entity);
@@ -24,7 +24,7 @@ public class ReplyServiceImpl implements ReplyService {
 
     @Override
     public Reply update(Reply entity) {
-        return null;
+        return repository.save(entity);
     }
 
     @Override
