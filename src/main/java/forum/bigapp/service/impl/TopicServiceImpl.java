@@ -1,34 +1,35 @@
 package forum.bigapp.service.impl;
 
-import forum.bigapp.model.User;
-import forum.bigapp.repository.UserRepository;
-import forum.bigapp.service.UserService;
+import forum.bigapp.model.Topic;
+import forum.bigapp.repository.TopicRepository;
+import forum.bigapp.service.TopicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
-    private UserRepository repository;
+public class TopicServiceImpl implements TopicService {
+    private TopicRepository repository;
 
     @Override
-    public User save(User entity) {
+    public Topic save(Topic entity) {
         return repository.save(entity);
     }
 
     @Override
-    public User getByID(Long id) {
+    public Topic getByID(Long id) {
         return repository.getReferenceById(id);
     }
 
     @Override
-    public User update(User entity) {
+    public Topic update(Topic entity) {
         return repository.save(entity);
     }
 
     @Override
-    public List<User> findAll() {
+    public List<Topic> findAll() {
         return repository.findAll();
     }
 
