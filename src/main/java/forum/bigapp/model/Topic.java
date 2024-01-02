@@ -20,6 +20,7 @@ public class Topic {
     private String content;
     @ManyToOne
     private User owner;
+//    @OneToMany(mappedBy = "topic")
     @OneToMany
     private List<Comment> comments;
 }
