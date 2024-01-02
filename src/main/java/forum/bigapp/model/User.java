@@ -19,8 +19,10 @@ public class User {
     private String username;
     private String password;
     private String description;
+//    @OneToMany(mappedBy = "owner")
     @OneToMany
     private List<Comment> comments;
+//    @OneToMany(mappedBy = "owner")
     @OneToMany
     private List<Topic> topics;
 }
