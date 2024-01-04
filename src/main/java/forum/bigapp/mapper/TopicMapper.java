@@ -13,7 +13,7 @@ import org.mapstruct.Named;
 import java.util.List;
 import java.util.Optional;
 
-@Mapper(config = MapperConfig.class)
+@Mapper(config = MapperConfig.class, uses = {UserMapper.class})
 public interface TopicMapper {
     @Mapping(source = "owner.id", target = "ownerId")
     @Mapping(target = "commentsId", ignore = true)

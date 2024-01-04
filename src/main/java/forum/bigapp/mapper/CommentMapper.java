@@ -13,7 +13,7 @@ import org.mapstruct.Named;
 import java.util.List;
 import java.util.Optional;
 
-@Mapper(config = MapperConfig.class)
+@Mapper(config = MapperConfig.class, uses = {UserMapper.class, TopicMapper.class})
 public interface CommentMapper {
     @Mapping(source = "owner.id", target = "ownerId")
     @Mapping(source = "topic.id", target = "topicId")

@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MapperConfig;
 import org.mapstruct.Mapping;
 
-@Mapper(config = MapperConfig.class)
+@Mapper(config = MapperConfig.class, uses = {CommentMapper.class})
 public interface ReplyMapper {
     @Mapping(source = "comment.id", target = "headCommentId")
     ReplyResponseDto toDto(Reply reply);
