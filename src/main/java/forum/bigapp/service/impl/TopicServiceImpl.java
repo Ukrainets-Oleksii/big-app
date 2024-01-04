@@ -34,6 +34,6 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public void deleteById(Long id) {
-        repository.deleteById(id);
+        getByID(id).setDeleted(true);
     }
 }

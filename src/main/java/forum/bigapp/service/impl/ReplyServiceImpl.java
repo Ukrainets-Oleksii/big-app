@@ -34,7 +34,7 @@ public class ReplyServiceImpl implements ReplyService {
 
     @Override
     public void deleteById(Long id) {
-        repository.deleteById(id);
+        getByID(id).setDeleted(true);
     }
 }
 
