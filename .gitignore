@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### DB ###
-src/main/resources/application.properties/
+application.properties
