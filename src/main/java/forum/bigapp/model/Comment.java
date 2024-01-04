@@ -18,6 +18,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
+    private boolean isDeleted;
     @ManyToOne
     private User owner;
     @ManyToOne
@@ -25,4 +26,5 @@ public class Comment {
 //    @OneToMany(mappedBy = "headComment")
     @OneToMany
     private List<Reply> replies;
+
 }

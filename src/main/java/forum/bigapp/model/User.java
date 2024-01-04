@@ -19,6 +19,7 @@ public class User {
     private String username;
     private String password;
     private String description;
+    private boolean isDeleted;
 //    @OneToMany(mappedBy = "owner")
     @OneToMany
     private List<Comment> comments;

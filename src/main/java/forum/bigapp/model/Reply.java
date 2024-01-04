@@ -16,6 +16,7 @@ public class Reply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
+    private boolean isDeleted;
     @ManyToOne
     private Comment headComment;
 }

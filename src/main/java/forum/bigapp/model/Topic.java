@@ -18,6 +18,7 @@ public class Topic {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
+    private boolean isDeleted;
     @ManyToOne
     private User owner;
 //    @OneToMany(mappedBy = "topic")
