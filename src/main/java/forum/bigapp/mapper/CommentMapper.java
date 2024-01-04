@@ -24,5 +24,17 @@ public interface CommentMapper {
         dto.setRepliesId(repliesId);
     }
 
+    @Mapping(source = "ownerId", target = "owner", qualifiedByName = "ownerById")
+    @Mapping(source = "topicId", target = "topic", qualifiedByName = "topicById")
+    @Mapping(target = "replies", ignore = true)
     Comment toModel(CommentRequestDto dto);
+
+    @AfterMapping
+    default void setSubjects(@MappingTarget Comment comment, CommentRequestDto requestDto) {
+        List<Reply> replies = requestDto.getRepliesId()
+                .stream()
+                .map(Reply::new)
+                .toList();
+        comment.setReplies(replies);
+    }
 }
