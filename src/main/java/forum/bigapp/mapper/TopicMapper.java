@@ -1,13 +1,15 @@
 package forum.bigapp.mapper;
 
 import forum.bigapp.dto.request.TopicRequestDto;
-import forum.bigapp.dto.response.CommentResponseDto;
 import forum.bigapp.dto.response.TopicResponseDto;
 import forum.bigapp.model.Comment;
-import forum.bigapp.model.Reply;
 import forum.bigapp.model.Topic;
-import org.mapstruct.*;
-
+import org.mapstruct.AfterMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.MapperConfig;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
 import java.util.List;
 import java.util.Optional;
 

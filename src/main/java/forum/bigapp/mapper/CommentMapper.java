@@ -35,7 +35,7 @@ public interface CommentMapper {
     Comment toModel(CommentRequestDto dto);
 
     @AfterMapping
-    default void setSubjects(@MappingTarget Comment comment, CommentRequestDto dto) {
+    default void setReplies(@MappingTarget Comment comment, CommentRequestDto dto) {
         List<Reply> replies = dto.getRepliesId()
                 .stream()
                 .map(Reply::new)

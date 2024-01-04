@@ -40,7 +40,7 @@ public interface UserMapper {
     User toModel(UserRequestDto dto);
 
     @AfterMapping
-    default void setSubjects(@MappingTarget User user, UserRequestDto dto) {
+    default void setTopicsAndComments(@MappingTarget User user, UserRequestDto dto) {
         List<Comment> comments = dto.getCommentsId()
                 .stream()
                 .map(Comment::new)
