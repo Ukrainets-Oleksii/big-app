@@ -4,9 +4,14 @@ import forum.bigapp.dto.request.CommentRequestDto;
 import forum.bigapp.dto.response.CommentResponseDto;
 import forum.bigapp.model.Comment;
 import forum.bigapp.model.Reply;
-import org.mapstruct.*;
-
+import org.mapstruct.AfterMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.MapperConfig;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
 import java.util.List;
+import java.util.Optional;
 
 @Mapper(config = MapperConfig.class)
 public interface CommentMapper {
@@ -24,17 +29,24 @@ public interface CommentMapper {
         dto.setRepliesId(repliesId);
     }
 
-    @Mapping(source = "ownerId", target = "owner", qualifiedByName = "ownerById")
+    @Mapping(source = "ownerId", target = "owner", qualifiedByName = "userById")
     @Mapping(source = "topicId", target = "topic", qualifiedByName = "topicById")
     @Mapping(target = "replies", ignore = true)
     Comment toModel(CommentRequestDto dto);
 
     @AfterMapping
-    default void setSubjects(@MappingTarget Comment comment, CommentRequestDto requestDto) {
-        List<Reply> replies = requestDto.getRepliesId()
+    default void setSubjects(@MappingTarget Comment comment, CommentRequestDto dto) {
+        List<Reply> replies = dto.getRepliesId()
                 .stream()
                 .map(Reply::new)
                 .toList();
         comment.setReplies(replies);
+    }
+
+    @Named("commentById")
+    default Comment commentById(Long id) {
+        return Optional.ofNullable(id)
+                .map(Comment::new)
+                .orElse(null);
     }
 }

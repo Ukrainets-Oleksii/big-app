@@ -8,11 +8,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
 @Table(name = "comments")
 @Data
+@NoArgsConstructor
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +29,7 @@ public class Comment {
     @OneToMany
     private List<Reply> replies;
 
+    public Comment(Long id) {
+        this.id = id;
+    }
 }
