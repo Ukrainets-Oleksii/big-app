@@ -42,7 +42,7 @@ public interface TopicMapper {
     }
 
     @Named("topicById")
-    default Topic userById(Long id) {
+    default Topic topicById(Long id) {
         return Optional.ofNullable(id)
                 .map(Topic::new)
                 .orElse(null);

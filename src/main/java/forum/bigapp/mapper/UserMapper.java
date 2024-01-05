@@ -32,7 +32,7 @@ public interface UserMapper {
                 .stream()
                 .map(Topic::getId)
                 .toList();
-        dto.setCommentsId(topicsId);
+        dto.setTopicsId(topicsId);
     }
 
     @Mapping(target = "comments", ignore = true)
