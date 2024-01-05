@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TopicServiceImpl implements TopicService {
-    private TopicRepository repository;
+    private final TopicRepository repository;
 
     @Override
     public Topic save(Topic entity) {

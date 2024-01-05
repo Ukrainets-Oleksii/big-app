@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ReplyServiceImpl implements ReplyService {
-    private ReplyRepository repository;
+    private final ReplyRepository repository;
 
     @Override
     public Reply save(Reply entity) {

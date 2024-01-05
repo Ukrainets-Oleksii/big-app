@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
-    private CommentRepository repository;
+    private final CommentRepository repository;
 
     @Override
     public Comment save(Comment entity) {
