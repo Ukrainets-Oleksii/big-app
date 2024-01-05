@@ -1,12 +1,12 @@
 package forum.bigapp.mapper;
 
+import forum.bigapp.config.MapperConfig;
 import forum.bigapp.dto.request.CommentRequestDto;
 import forum.bigapp.dto.response.CommentResponseDto;
 import forum.bigapp.model.Comment;
 import forum.bigapp.model.Reply;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
-import org.mapstruct.MapperConfig;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
