@@ -1,7 +1,6 @@
 package forum.bigapp.dto.response;
 
 import lombok.Data;
-
 import java.util.List;
 
 @Data
