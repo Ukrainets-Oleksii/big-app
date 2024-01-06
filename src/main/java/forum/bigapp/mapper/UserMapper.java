@@ -24,7 +24,8 @@ public interface UserMapper {
     UserResponseDto toDto(User user);
 
     @AfterMapping
-    default void setCommentsIdAndTopicsId(@MappingTarget UserResponseDto dto, User user) {
+    default void setCommentsIdAndTopicsIdAndRepliesId(@MappingTarget
+                                                          UserResponseDto dto, User user) {
         if (user.getComments() != null) {
             List<Long> commentsId = user.getComments()
                     .stream()
@@ -62,8 +63,9 @@ public interface UserMapper {
     User toModel(UserRequestDto dto);
 
     @AfterMapping
-    default void setTopicsAndComments(@MappingTarget User user, UserRequestDto dto) {
-        if (dto.getCommentsId() != null) { //TODO поставитиу всіх маперах перевірку на нал
+    default void setTopicsAndCommentsAndReplies(@MappingTarget
+                                                    User user, UserRequestDto dto) {
+        if (dto.getCommentsId() != null) {
             List<Comment> comments = dto.getCommentsId()
                     .stream()
                     .map(Comment::new)

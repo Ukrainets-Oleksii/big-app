@@ -10,6 +10,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,11 +24,15 @@ public interface CommentMapper {
 
     @AfterMapping
     default void setRepliesId(@MappingTarget CommentResponseDto dto, Comment comment) {
-        List<Long> repliesId = comment.getReplies()
-                .stream()
-                .map(Reply::getId)
-                .toList();
-        dto.setRepliesId(repliesId);
+        if (comment.getReplies() != null) {
+            List<Long> repliesId = comment.getReplies()
+                    .stream()
+                    .map(Reply::getId)
+                    .toList();
+            dto.setRepliesId(repliesId);
+        } else {
+            dto.setRepliesId(new ArrayList<>());
+        }
     }
 
     @Mapping(source = "ownerId", target = "owner", qualifiedByName = "userById")
@@ -36,11 +42,15 @@ public interface CommentMapper {
 
     @AfterMapping
     default void setReplies(@MappingTarget Comment comment, CommentRequestDto dto) {
-        List<Reply> replies = dto.getRepliesId()
-                .stream()
-                .map(Reply::new)
-                .toList();
-        comment.setReplies(replies);
+        if (dto.getRepliesId() != null){
+            List<Reply> replies = dto.getRepliesId()
+                    .stream()
+                    .map(Reply::new)
+                    .toList();
+            comment.setReplies(replies);
+        } else {
+            comment.setReplies(new ArrayList<>());
+        }
     }
 
     @Named("commentById")

@@ -10,6 +10,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,11 +23,15 @@ public interface TopicMapper {
 
     @AfterMapping
     default void setCommentsId(@MappingTarget TopicResponseDto dto, Topic topic) {
-        List<Long> commentId = topic.getComments()
-                .stream()
-                .map(Comment::getId)
-                .toList();
-        dto.setCommentsId(commentId);
+        if (topic.getComments() != null) {
+            List<Long> commentId = topic.getComments()
+                    .stream()
+                    .map(Comment::getId)
+                    .toList();
+            dto.setCommentsId(commentId);
+        } else {
+            dto.setCommentsId(new ArrayList<>());
+        }
     }
 
     @Mapping(source = "ownerId", target = "owner", qualifiedByName = "userById")
@@ -34,11 +40,15 @@ public interface TopicMapper {
 
     @AfterMapping
     default void setComments(@MappingTarget Topic topic, TopicRequestDto dto) {
-        List<Comment> commentId = dto.getCommentsId()
-                .stream()
-                .map(Comment::new)
-                .toList();
-        topic.setComments(commentId);
+        if (dto.getCommentsId() != null) {
+            List<Comment> commentId = dto.getCommentsId()
+                    .stream()
+                    .map(Comment::new)
+                    .toList();
+            topic.setComments(commentId);
+        } else {
+            topic.setComments(new ArrayList<>());
+        }
     }
 
     @Named("topicById")
