@@ -1,8 +1,12 @@
 package forum.bigapp.service.impl;
 
 import forum.bigapp.model.Comment;
+import forum.bigapp.model.Topic;
+import forum.bigapp.model.User;
 import forum.bigapp.repository.CommentRepository;
 import forum.bigapp.service.CommentService;
+import forum.bigapp.service.TopicService;
+import forum.bigapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -11,10 +15,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
     private final CommentRepository repository;
+    private final UserService userService;
+    private final TopicService topicService;
 
     @Override
     public Comment save(Comment entity) {
-        return repository.save(entity);
+        Comment comment = repository.save(entity);
+        setUserToComment(entity);
+        setTopicToComment(entity);
+        return comment;
     }
 
     @Override
@@ -29,11 +38,23 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> findAll() {
-        return repository.findAll();
+        return repository.findAll(); //TODO // isDeleted перевірка чи true
     }
 
     @Override
     public void deleteById(Long id) {
         getByID(id).setDeleted(true);
+    }
+
+    private void setUserToComment(Comment entity) {
+        User user = userService.getByID(entity.getOwner().getId());
+        user.getComments().add(entity);
+        userService.update(user);
+    }
+
+    private void setTopicToComment(Comment entity) {
+        Topic topic = topicService.getByID(entity.getTopic().getId());
+        topic.getComments().add(entity);
+        topicService.update(topic);
     }
 }

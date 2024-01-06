@@ -5,12 +5,14 @@ import forum.bigapp.dto.request.UserRequestDto;
 import forum.bigapp.dto.response.UserResponseDto;
 import forum.bigapp.model.Comment;
 import forum.bigapp.model.Topic;
+import forum.bigapp.model.Reply;
 import forum.bigapp.model.User;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,40 +20,78 @@ import java.util.Optional;
 public interface UserMapper {
     @Mapping(target = "commentsId", ignore = true)
     @Mapping(target = "topicsId", ignore = true)
+    @Mapping(target = "repliesId", ignore = true)
     UserResponseDto toDto(User user);
 
     @AfterMapping
     default void setCommentsIdAndTopicsId(@MappingTarget UserResponseDto dto, User user) {
-        List<Long> commentsId = user.getComments()
-                .stream()
-                .map(Comment::getId)
-                .toList();
-        dto.setCommentsId(commentsId);
+        if (user.getComments() != null) {
+            List<Long> commentsId = user.getComments()
+                    .stream()
+                    .map(Comment::getId)
+                    .toList();
+            dto.setCommentsId(commentsId);
+        } else {
+            dto.setCommentsId(new ArrayList<>());
+        }
 
-        List<Long> topicsId = user.getTopics()
-                .stream()
-                .map(Topic::getId)
-                .toList();
-        dto.setTopicsId(topicsId);
+        if (user.getTopics() != null){
+            List<Long> topicsId = user.getTopics()
+                    .stream()
+                    .map(Topic::getId)
+                    .toList();
+            dto.setTopicsId(topicsId);
+        } else {
+            dto.setTopicsId(new ArrayList<>());
+        }
+
+        if (user.getReplies() != null){
+            List<Long> repliesId = user.getReplies()
+                    .stream()
+                    .map(Reply::getId)
+                    .toList();
+            dto.setRepliesId(repliesId);
+        } else {
+            dto.setRepliesId(new ArrayList<>());
+        }
     }
 
     @Mapping(target = "comments", ignore = true)
     @Mapping(target = "topics", ignore = true)
+    @Mapping(target = "replies", ignore = true)
     User toModel(UserRequestDto dto);
 
     @AfterMapping
     default void setTopicsAndComments(@MappingTarget User user, UserRequestDto dto) {
-        List<Comment> comments = dto.getCommentsId()
-                .stream()
-                .map(Comment::new)
-                .toList();
-        user.setComments(comments);
+        if (dto.getCommentsId() != null) { //TODO поставитиу всіх маперах перевірку на нал
+            List<Comment> comments = dto.getCommentsId()
+                    .stream()
+                    .map(Comment::new)
+                    .toList();
+            user.setComments(comments);
+        } else {
+            user.setComments(new ArrayList<>());
+        }
 
-        List<Topic> topics = dto.getTopicsId()
-                .stream()
-                .map(Topic::new)
-                .toList();
-        user.setTopics(topics);
+        if (dto.getTopicsId() != null) {
+            List<Topic> topics = dto.getTopicsId()
+                    .stream()
+                    .map(Topic::new)
+                    .toList();
+            user.setTopics(topics);
+        } else {
+            user.setTopics(new ArrayList<>());
+        }
+
+        if (dto.getRepliesId() != null) {
+            List<Reply> replies = dto.getRepliesId()
+                    .stream()
+                    .map(Reply::new)
+                    .toList();
+            user.setReplies(replies);
+        } else {
+            user.setReplies(new ArrayList<>());
+        }
     }
 
     @Named("userById")

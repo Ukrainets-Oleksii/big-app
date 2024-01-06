@@ -1,8 +1,10 @@
 package forum.bigapp.service.impl;
 
 import forum.bigapp.model.Topic;
+import forum.bigapp.model.User;
 import forum.bigapp.repository.TopicRepository;
 import forum.bigapp.service.TopicService;
+import forum.bigapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -11,10 +13,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TopicServiceImpl implements TopicService {
     private final TopicRepository repository;
+    private final UserService userService;
 
     @Override
     public Topic save(Topic entity) {
-        return repository.save(entity);
+        Topic topic = repository.save(entity);
+        setTopicToUser(entity);
+        return topic;
     }
 
     @Override
@@ -35,5 +40,11 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public void deleteById(Long id) {
         getByID(id).setDeleted(true);
+    }
+
+    private void setTopicToUser(Topic entity){
+        User user = userService.getByID(entity.getOwner().getId());
+        user.getTopics().add(entity);
+        userService.update(user);
     }
 }

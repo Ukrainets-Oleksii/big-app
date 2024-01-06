@@ -20,6 +20,8 @@ public class Reply {
     private String content;
     private boolean isDeleted;
     @ManyToOne
+    private User owner;
+    @ManyToOne
     private Comment headComment;
 
     public Reply(Long id) {

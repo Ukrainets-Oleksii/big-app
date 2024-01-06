@@ -8,7 +8,7 @@ public class UserRequestDto {
     private String username;
     private String password;
     private String description;
-    private boolean isDeleted;
     private List<Long> commentsId;
     private List<Long> topicsId;
+    private List<Long> repliesId;
 }

@@ -6,6 +6,6 @@ import lombok.Data;
 public class ReplyResponseDto {
     private Long id;
     private String content;
-    private boolean isDeleted;
     private Long headCommentId;
+    private Long ownerId;
 }

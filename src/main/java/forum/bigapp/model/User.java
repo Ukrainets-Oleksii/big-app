@@ -28,6 +28,8 @@ public class User {
 //    @OneToMany(mappedBy = "owner")
     @OneToMany
     private List<Topic> topics;
+    @OneToMany
+    private List<Reply> replies;
 
     public User(Long id) {
         this.id = id;
