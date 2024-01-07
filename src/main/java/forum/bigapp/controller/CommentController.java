@@ -5,7 +5,14 @@ import forum.bigapp.dto.response.CommentResponseDto;
 import forum.bigapp.mapper.CommentMapper;
 import forum.bigapp.service.CommentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -17,7 +24,7 @@ public class CommentController {
 
     @PostMapping("/create")
     public CommentResponseDto create(@RequestBody CommentRequestDto dto) {
-        return mapper.toDto(service.save(mapper.toModel(dto)));
+        return mapper.toDto(service.save(mapper.toModel(dto))); //TODO пофіксити зберігання комента без юзера
     }
 
     @GetMapping("/findAll")

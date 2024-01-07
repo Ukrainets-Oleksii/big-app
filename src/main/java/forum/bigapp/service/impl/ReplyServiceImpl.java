@@ -52,13 +52,13 @@ public class ReplyServiceImpl implements ReplyService {
     private void setReplyToComment(Reply entity) {
         Comment comment = commentService.getByID(entity.getHeadComment().getId());
         comment.getReplies().add(entity);
-        commentService.update(entity.getId(), comment);
+        commentService.update(comment.getId(), comment);
     }
 
     private void setReplyToUser(Reply entity) {
         User user = userService.getByID(entity.getOwner().getId());
         user.getReplies().add(entity);
-        userService.update(entity.getId(), user);
+        userService.update(user.getId(), user);
     }
 }
 

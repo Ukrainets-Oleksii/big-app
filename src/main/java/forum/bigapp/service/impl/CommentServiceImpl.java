@@ -52,12 +52,12 @@ public class CommentServiceImpl implements CommentService {
     private void setUserToComment(Comment entity) {
         User user = userService.getByID(entity.getOwner().getId());
         user.getComments().add(entity);
-        userService.update(entity.getId(), user);
+        userService.update(user.getId(), user);
     }
 
     private void setTopicToComment(Comment entity) {
         Topic topic = topicService.getByID(entity.getTopic().getId());
         topic.getComments().add(entity);
-        topicService.update(entity.getId(), topic);
+        topicService.update(topic.getId(), topic);
     }
 }

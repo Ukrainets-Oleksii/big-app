@@ -29,7 +29,8 @@ public class UserController {
 
     @GetMapping("/{id}")
     public UserResponseDto findById(@PathVariable Long id) {
-        return mapper.toDto(service.getByID(id));
+        return mapper.toDto(service.getByID(id)); // TODO we need to do
+        // обробку помилки у випадку не знайденого юзера і ексепшен хандлер
     }
 
     @GetMapping("/findAll")

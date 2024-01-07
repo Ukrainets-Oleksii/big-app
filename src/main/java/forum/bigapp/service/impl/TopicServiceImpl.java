@@ -48,6 +48,6 @@ public class TopicServiceImpl implements TopicService {
     private void setTopicToUser(Topic entity){
         User user = userService.getByID(entity.getOwner().getId());
         user.getTopics().add(entity);
-        userService.update(entity.getId(), user);
+        userService.update(user.getId(), user);
     }
 }
