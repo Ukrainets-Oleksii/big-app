@@ -6,7 +6,6 @@ import forum.bigapp.mapper.CommentMapper;
 import forum.bigapp.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -17,19 +16,19 @@ public class CommentController {
     private final CommentMapper mapper;
 
     @PostMapping("/create")
-    public CommentResponseDto createComment(@RequestBody CommentRequestDto dto) {
+    public CommentResponseDto create(@RequestBody CommentRequestDto dto) {
         return mapper.toDto(service.save(mapper.toModel(dto)));
     }
 
     @GetMapping("/findAll")
-    public List<CommentResponseDto> findAllComment() {
+    public List<CommentResponseDto> findAll() {
         return service.findAll().stream()
                 .map(mapper::toDto)
                 .toList();
     }
 
     @GetMapping("/{id}")
-    public CommentResponseDto getById(@PathVariable Long id) {
+    public CommentResponseDto findById(@PathVariable Long id) {
         return mapper.toDto(service.getByID(id));
     }
 
@@ -39,7 +38,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         service.deleteById(id);
     }
 }

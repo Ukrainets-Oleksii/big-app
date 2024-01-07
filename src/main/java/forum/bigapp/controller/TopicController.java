@@ -6,7 +6,6 @@ import forum.bigapp.mapper.TopicMapper;
 import forum.bigapp.service.TopicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -17,19 +16,19 @@ public class TopicController {
     TopicMapper mapper;
 
     @PostMapping("/create")
-    public TopicResponseDto createComment(@RequestBody TopicRequestDto dto) {
+    public TopicResponseDto create(@RequestBody TopicRequestDto dto) {
         return mapper.toDto(service.save(mapper.toModel(dto)));
     }
 
     @GetMapping("/findAll")
-    public List<TopicResponseDto> findAllComment() {
+    public List<TopicResponseDto> findAll() {
         return service.findAll().stream()
                 .map(mapper::toDto)
                 .toList();
     }
 
     @GetMapping("/{id}")
-    public TopicResponseDto getById(@PathVariable Long id) {
+    public TopicResponseDto findById(@PathVariable Long id) {
         return mapper.toDto(service.getByID(id));
     }
 
@@ -39,7 +38,7 @@ public class TopicController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         service.deleteById(id);
     }
 }

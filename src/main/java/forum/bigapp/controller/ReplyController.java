@@ -1,14 +1,11 @@
 package forum.bigapp.controller;
 
-import forum.bigapp.dto.request.CommentRequestDto;
 import forum.bigapp.dto.request.ReplyRequestDto;
-import forum.bigapp.dto.response.CommentResponseDto;
 import forum.bigapp.dto.response.ReplyResponseDto;
 import forum.bigapp.mapper.ReplyMapper;
 import forum.bigapp.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -19,19 +16,19 @@ public class ReplyController {
     ReplyMapper mapper;
 
     @PostMapping("/create")
-    public ReplyResponseDto createComment(@RequestBody ReplyRequestDto dto) {
+    public ReplyResponseDto create(@RequestBody ReplyRequestDto dto) {
         return mapper.toDto(service.save(mapper.toModel(dto)));
     }
 
     @GetMapping("/findAll")
-    public List<ReplyResponseDto> findAllComment() {
+    public List<ReplyResponseDto> findAll() {
         return service.findAll().stream()
                 .map(mapper::toDto)
                 .toList();
     }
 
     @GetMapping("/{id}")
-    public ReplyResponseDto getById(@PathVariable Long id) {
+    public ReplyResponseDto findById(@PathVariable Long id) {
         return mapper.toDto(service.getByID(id));
     }
 
@@ -41,7 +38,7 @@ public class ReplyController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         service.deleteById(id);
     }
 }
