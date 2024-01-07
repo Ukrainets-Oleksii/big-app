@@ -81,4 +81,9 @@ public class TestController {
                 .map(commentMapper::toDto)
                 .toList();
     }
+
+    @DeleteMapping("/delete/user/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        userService.deleteById(id);
+    }
 }

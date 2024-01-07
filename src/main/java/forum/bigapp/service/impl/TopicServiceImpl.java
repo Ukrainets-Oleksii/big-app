@@ -28,7 +28,8 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public Topic update(Topic entity) {
+    public Topic update(Long id, Topic entity) {
+        entity.setId(id);
         return repository.save(entity);
     }
 
@@ -39,12 +40,14 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public void deleteById(Long id) {
-        getByID(id).setDeleted(true);
+        Topic topic = getByID(id);
+        topic.setDeleted(true);
+        update(id, topic);
     }
 
     private void setTopicToUser(Topic entity){
         User user = userService.getByID(entity.getOwner().getId());
         user.getTopics().add(entity);
-        userService.update(user);
+        userService.update(entity.getId(), user);
     }
 }

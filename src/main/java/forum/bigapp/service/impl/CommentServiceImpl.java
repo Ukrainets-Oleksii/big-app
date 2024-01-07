@@ -32,29 +32,32 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment update(Comment entity) {
+    public Comment update(Long id, Comment entity) {
+        entity.setId(id);
         return repository.save(entity);
     }
 
     @Override
     public List<Comment> findAll() {
-        return repository.findAll(); //TODO // isDeleted перевірка чи true
+        return repository.findAll();
     }
 
     @Override
     public void deleteById(Long id) {
-        getByID(id).setDeleted(true);
+        Comment comment = getByID(id);
+        comment.setDeleted(true);
+        update(id, comment);
     }
 
     private void setUserToComment(Comment entity) {
         User user = userService.getByID(entity.getOwner().getId());
         user.getComments().add(entity);
-        userService.update(user);
+        userService.update(entity.getId(), user);
     }
 
     private void setTopicToComment(Comment entity) {
         Topic topic = topicService.getByID(entity.getTopic().getId());
         topic.getComments().add(entity);
-        topicService.update(topic);
+        topicService.update(entity.getId(), topic);
     }
 }

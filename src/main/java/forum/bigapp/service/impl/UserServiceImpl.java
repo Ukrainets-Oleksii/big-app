@@ -23,7 +23,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User update(User entity) {
+    public User update(Long id, User entity) {
+        entity.setId(id);
         return repository.save(entity);
     }
 
@@ -34,6 +35,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteById(Long id) {
-        getByID(id).setDeleted(true);
+        User user = getByID(id);
+        user.setDeleted(true);
+        update(id, user);
     }
 }

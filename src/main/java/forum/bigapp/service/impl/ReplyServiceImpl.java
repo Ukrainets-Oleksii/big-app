@@ -32,7 +32,8 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public Reply update(Reply entity) {
+    public Reply update(Long id, Reply entity) {
+        entity.setId(id);
         return repository.save(entity);
     }
 
@@ -43,19 +44,21 @@ public class ReplyServiceImpl implements ReplyService {
 
     @Override
     public void deleteById(Long id) {
-        getByID(id).setDeleted(true);
+        Reply reply = getByID(id);
+        reply.setDeleted(true);
+        update(id, reply);
     }
 
     private void setReplyToComment(Reply entity) {
         Comment comment = commentService.getByID(entity.getHeadComment().getId());
         comment.getReplies().add(entity);
-        commentService.update(comment);
+        commentService.update(entity.getId(), comment);
     }
 
     private void setReplyToUser(Reply entity) {
         User user = userService.getByID(entity.getOwner().getId());
         user.getReplies().add(entity);
-        userService.update(user);
+        userService.update(entity.getId(), user);
     }
 }
 

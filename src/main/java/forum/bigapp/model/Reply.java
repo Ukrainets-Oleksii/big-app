@@ -1,5 +1,6 @@
 package forum.bigapp.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,9 +9,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "replies")
+@Where(clause = "is_deleted = false")
 @Data
 @NoArgsConstructor
 public class Reply {
@@ -18,6 +21,7 @@ public class Reply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
+    @Column(name = "is_deleted", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean isDeleted;
     @ManyToOne
     private User owner;
