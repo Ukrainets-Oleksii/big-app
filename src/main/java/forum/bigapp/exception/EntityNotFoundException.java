@@ -1,4 +1,4 @@
-package forum.bigapp.exception.global.exception.handler;
+package forum.bigapp.exception;
 
 public class EntityNotFoundException extends RuntimeException {
     public EntityNotFoundException(String message) {
