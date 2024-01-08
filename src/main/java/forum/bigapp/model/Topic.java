@@ -29,7 +29,6 @@ public class Topic {
     private boolean isDeleted;
     @ManyToOne
     private User owner;
-//    @OneToMany(mappedBy = "topic")
     @OneToMany
     private List<Comment> comments;
 

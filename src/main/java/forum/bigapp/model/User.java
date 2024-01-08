@@ -29,10 +29,8 @@ public class User {
     private String description;
     @Column(name = "is_deleted", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean isDeleted;
-//    @OneToMany(mappedBy = "owner")
     @OneToMany
     private List<Comment> comments;
-//    @OneToMany(mappedBy = "owner")
     @OneToMany
     private List<Topic> topics;
     @OneToMany

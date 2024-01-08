@@ -32,7 +32,6 @@ public class Comment {
     private User owner;
     @ManyToOne
     private Topic topic;
-//    @OneToMany(mappedBy = "headComment")
     @OneToMany
     private List<Reply> replies;
 
