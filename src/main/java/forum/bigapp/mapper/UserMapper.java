@@ -71,9 +71,10 @@ public interface UserMapper {
                     .map(Comment::new)
                     .toList();
             user.setComments(comments);
-        } else {
-            user.setComments(new ArrayList<>());
         }
+//        else {
+//            user.setComments(new ArrayList<>());
+//        }
 
         if (dto.getTopicsId() != null) {
             List<Topic> topics = dto.getTopicsId()
@@ -81,9 +82,10 @@ public interface UserMapper {
                     .map(Topic::new)
                     .toList();
             user.setTopics(topics);
-        } else {
-            user.setTopics(new ArrayList<>());
         }
+//        else {
+//            user.setTopics(new ArrayList<>());
+//        }
 
         if (dto.getRepliesId() != null) {
             List<Reply> replies = dto.getRepliesId()
@@ -91,9 +93,10 @@ public interface UserMapper {
                     .map(Reply::new)
                     .toList();
             user.setReplies(replies);
-        } else {
-            user.setReplies(new ArrayList<>());
         }
+//        else {
+//            user.setReplies(new ArrayList<>());
+//        }
     }
 
     @Named("userById")

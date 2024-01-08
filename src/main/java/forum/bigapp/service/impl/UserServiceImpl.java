@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(Long id, User entity) {
-        entity.setId(id);
+        entity.setId(id); //TODO fixed update
         return repository.save(entity);
     }
 

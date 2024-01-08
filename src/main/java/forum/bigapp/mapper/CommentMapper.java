@@ -47,9 +47,10 @@ public interface CommentMapper {
                     .map(Reply::new)
                     .toList();
             comment.setReplies(replies);
-        } else {
-            comment.setReplies(new ArrayList<>());
         }
+//        else {
+//            comment.setReplies(new ArrayList<>()); TODO
+//        }
     }
 
     @Named("commentById")

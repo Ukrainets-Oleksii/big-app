@@ -1,6 +1,6 @@
 package forum.bigapp.dto.request;
 
-import jakarta.validation.constraints.Email;
+import forum.bigapp.validation.annotations.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -8,10 +8,9 @@ import java.util.List;
 
 @Data
 public class UserRequestDto {
-    @Email //TODO
+    @Email
     @NotNull
     private String email;
-    //TODO @NotEqual
     @NotNull
     private String username;
     @NotNull
