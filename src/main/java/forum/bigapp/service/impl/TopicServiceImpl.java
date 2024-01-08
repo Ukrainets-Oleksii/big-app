@@ -1,5 +1,6 @@
 package forum.bigapp.service.impl;
 
+import forum.bigapp.config.Config;
 import forum.bigapp.model.Topic;
 import forum.bigapp.model.User;
 import forum.bigapp.repository.TopicRepository;
@@ -7,10 +8,8 @@ import forum.bigapp.service.TopicService;
 import forum.bigapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +19,7 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public Topic save(Topic entity) {
-        entity.setTimestamp(String.valueOf(LocalDate.now()));
+        entity.setTimestamp(LocalDateTime.now().format(Config.format));
         Topic topic = repository.save(entity);
         setTopicToUser(entity);
         return topic;
