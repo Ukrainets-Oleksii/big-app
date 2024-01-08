@@ -9,6 +9,8 @@ import forum.bigapp.service.ReplyService;
 import forum.bigapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,6 +22,7 @@ public class ReplyServiceImpl implements ReplyService {
 
     @Override
     public Reply save(Reply entity) {
+        entity.setTimestamp(String.valueOf(LocalDateTime.now()));
         Reply reply = repository.save(entity);
         setReplyToComment(entity);
         setReplyToUser(entity);

@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-        return repository.findAll(); //TODO перевіряти isDeleted
+        return repository.findAll();
     }
 
     @Override

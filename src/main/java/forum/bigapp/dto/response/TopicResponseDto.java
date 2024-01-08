@@ -7,6 +7,7 @@ import java.util.List;
 public class TopicResponseDto {
     private Long id;
     private String content;
+    private String timestamp;
     private Long ownerId;
     private List<Long> commentsId;
 }

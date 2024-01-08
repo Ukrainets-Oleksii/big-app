@@ -9,6 +9,8 @@ import forum.bigapp.service.TopicService;
 import forum.bigapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,9 +22,10 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment save(Comment entity) {
+        entity.setTimestamp(String.valueOf(LocalDateTime.now()));
         Comment comment = repository.save(entity);
-        setUserToComment(entity);
-        setTopicToComment(entity);
+        setCommentToUser(entity);
+        setCommentToTopic(entity);
         return comment;
     }
 
@@ -49,13 +52,13 @@ public class CommentServiceImpl implements CommentService {
         update(id, comment);
     }
 
-    private void setUserToComment(Comment entity) {
+    private void setCommentToUser(Comment entity) {
         User user = userService.getByID(entity.getOwner().getId());
         user.getComments().add(entity);
         userService.update(user.getId(), user);
     }
 
-    private void setTopicToComment(Comment entity) {
+    private void setCommentToTopic(Comment entity) {
         Topic topic = topicService.getByID(entity.getTopic().getId());
         topic.getComments().add(entity);
         topicService.update(topic.getId(), topic);

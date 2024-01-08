@@ -22,6 +22,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
+    private String email;
     private String password;
     private String description;
     @Column(name = "is_deleted", columnDefinition = "BOOLEAN DEFAULT false")

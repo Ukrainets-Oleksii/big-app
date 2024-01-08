@@ -7,7 +7,10 @@ import forum.bigapp.service.TopicService;
 import forum.bigapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +20,7 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public Topic save(Topic entity) {
+        entity.setTimestamp(String.valueOf(LocalDate.now()));
         Topic topic = repository.save(entity);
         setTopicToUser(entity);
         return topic;
