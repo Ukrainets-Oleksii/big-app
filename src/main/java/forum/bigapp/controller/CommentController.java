@@ -27,7 +27,8 @@ public class CommentController {
     @PostMapping("/create")
     public CommentResponseDto create(
             @RequestBody @Valid CommentRequestDto dto) {
-        return mapper.toDto(service.save(mapper.toModel(dto))); //TODO пофіксити зберігання комента без юзера
+        return mapper.toDto(service.save(mapper.toModel(dto)));
+        //TODO пофіксити зберігання комента без юзера like update
     }
 
     @GetMapping("/findAll")
