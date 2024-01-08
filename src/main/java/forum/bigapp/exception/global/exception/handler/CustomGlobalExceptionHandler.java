@@ -1,4 +1,4 @@
-package forum.bigapp.exception;
+package forum.bigapp.exception.global.exception.handler;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

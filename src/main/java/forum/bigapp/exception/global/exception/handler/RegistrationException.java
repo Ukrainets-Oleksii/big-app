@@ -1,4 +1,4 @@
-package forum.bigapp.exception;
+package forum.bigapp.exception.global.exception.handler;
 
 public class RegistrationException extends RuntimeException {
     public RegistrationException(String message) {
