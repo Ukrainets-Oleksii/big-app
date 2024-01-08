@@ -4,7 +4,9 @@ import forum.bigapp.dto.request.CommentRequestDto;
 import forum.bigapp.dto.response.CommentResponseDto;
 import forum.bigapp.mapper.CommentMapper;
 import forum.bigapp.service.CommentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +25,8 @@ public class CommentController {
     private final CommentMapper mapper;
 
     @PostMapping("/create")
-    public CommentResponseDto create(@RequestBody CommentRequestDto dto) {
+    public CommentResponseDto create(
+            @RequestBody @Valid CommentRequestDto dto) {
         return mapper.toDto(service.save(mapper.toModel(dto))); //TODO пофіксити зберігання комента без юзера
     }
 
@@ -40,7 +43,8 @@ public class CommentController {
     }
 
     @PutMapping("/{id}")
-    public CommentResponseDto update(@PathVariable Long id, @RequestBody CommentRequestDto requestDto) {
+    public CommentResponseDto update(@PathVariable Long id,
+                                     @RequestBody @Valid CommentRequestDto requestDto) {
         return mapper.toDto(service.update(id, mapper.toModel(requestDto)));
     }
 

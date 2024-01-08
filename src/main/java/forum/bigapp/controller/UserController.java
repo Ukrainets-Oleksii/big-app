@@ -4,6 +4,7 @@ import forum.bigapp.dto.request.UserRequestDto;
 import forum.bigapp.dto.response.UserResponseDto;
 import forum.bigapp.mapper.UserMapper;
 import forum.bigapp.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +24,7 @@ public class UserController {
     private final UserMapper mapper;
 
     @PostMapping("/create")
-    public UserResponseDto create(@RequestBody UserRequestDto dto) {
+    public UserResponseDto create(@RequestBody @Valid UserRequestDto dto) {
         return mapper.toDto(service.save(mapper.toModel(dto)));
     }
 
@@ -42,7 +43,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     public UserResponseDto update(@PathVariable Long id,
-                                  @RequestBody UserRequestDto dto) {
+                                  @RequestBody @Valid UserRequestDto dto) {
         return mapper.toDto(service.update(id, mapper.toModel(dto)));
     }
 

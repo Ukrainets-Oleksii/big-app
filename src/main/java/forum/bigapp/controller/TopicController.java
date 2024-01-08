@@ -4,6 +4,7 @@ import forum.bigapp.dto.request.TopicRequestDto;
 import forum.bigapp.dto.response.TopicResponseDto;
 import forum.bigapp.mapper.TopicMapper;
 import forum.bigapp.service.TopicService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +24,7 @@ public class TopicController {
     private final TopicMapper mapper;
 
     @PostMapping("/create")
-    public TopicResponseDto create(@RequestBody TopicRequestDto dto) {
+    public TopicResponseDto create(@RequestBody @Valid TopicRequestDto dto) {
         return mapper.toDto(service.save(mapper.toModel(dto)));
     }
 
@@ -40,7 +41,8 @@ public class TopicController {
     }
 
     @PutMapping("/{id}")
-    public TopicResponseDto update(@PathVariable Long id, @RequestBody TopicRequestDto requestDto) {
+    public TopicResponseDto update(@PathVariable Long id,
+                                   @RequestBody @Valid TopicRequestDto requestDto) {
         return mapper.toDto(service.update(id, mapper.toModel(requestDto)));
     }
 

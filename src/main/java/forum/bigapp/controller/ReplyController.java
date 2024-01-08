@@ -4,6 +4,7 @@ import forum.bigapp.dto.request.ReplyRequestDto;
 import forum.bigapp.dto.response.ReplyResponseDto;
 import forum.bigapp.mapper.ReplyMapper;
 import forum.bigapp.service.ReplyService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +24,8 @@ public class ReplyController {
     private final ReplyMapper mapper;
 
     @PostMapping("/create")
-    public ReplyResponseDto create(@RequestBody ReplyRequestDto dto) {
+    public ReplyResponseDto create(
+            @RequestBody @Valid ReplyRequestDto dto) {
         return mapper.toDto(service.save(mapper.toModel(dto)));
     }
 
@@ -40,7 +42,8 @@ public class ReplyController {
     }
 
     @PutMapping("/{id}")
-    public ReplyResponseDto update(@PathVariable Long id, @RequestBody ReplyRequestDto requestDto) {
+    public ReplyResponseDto update(@PathVariable Long id,
+                                   @RequestBody @Valid ReplyRequestDto requestDto) {
         return mapper.toDto(service.update(id, mapper.toModel(requestDto)));
     }
 
