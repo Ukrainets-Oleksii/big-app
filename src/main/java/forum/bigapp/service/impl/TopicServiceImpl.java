@@ -32,8 +32,10 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public Topic update(Long id, Topic entity) {
-        entity.setId(id);
-        return repository.save(entity);
+        Topic topic = getByID(id);
+        topic.setContent(entity.getContent());
+
+        return repository.save(topic);
     }
 
     @Override

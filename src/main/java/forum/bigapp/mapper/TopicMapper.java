@@ -46,9 +46,9 @@ public interface TopicMapper {
                     .toList();
             topic.setComments(commentId);
         }
-//        else {
-//            topic.setComments(new ArrayList<>());
-//        }
+        else {
+            topic.setComments(new ArrayList<>());
+        }
     }
 
     @Named("topicById")

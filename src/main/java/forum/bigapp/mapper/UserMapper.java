@@ -1,7 +1,9 @@
 package forum.bigapp.mapper;
 
 import forum.bigapp.config.MapperConfig;
+import forum.bigapp.dto.request.UserRegistrationRequestDto;
 import forum.bigapp.dto.request.UserRequestDto;
+import forum.bigapp.dto.response.UserRegistrationResponseDto;
 import forum.bigapp.dto.response.UserResponseDto;
 import forum.bigapp.model.Comment;
 import forum.bigapp.model.Topic;
@@ -18,6 +20,9 @@ import java.util.Optional;
 
 @Mapper(config = MapperConfig.class)
 public interface UserMapper {
+    User toModelFromRegistrationRequest(UserRegistrationRequestDto dto);
+    UserRegistrationResponseDto toUserRegistrationResponseDtoFromUser(User user);
+
     @Mapping(target = "commentsId", ignore = true)
     @Mapping(target = "topicsId", ignore = true)
     @Mapping(target = "repliesId", ignore = true)
@@ -72,9 +77,9 @@ public interface UserMapper {
                     .toList();
             user.setComments(comments);
         }
-//        else {
-//            user.setComments(new ArrayList<>());
-//        }
+        else {
+            user.setComments(new ArrayList<>());
+        }
 
         if (dto.getTopicsId() != null) {
             List<Topic> topics = dto.getTopicsId()
@@ -83,9 +88,9 @@ public interface UserMapper {
                     .toList();
             user.setTopics(topics);
         }
-//        else {
-//            user.setTopics(new ArrayList<>());
-//        }
+        else {
+            user.setTopics(new ArrayList<>());
+        }
 
         if (dto.getRepliesId() != null) {
             List<Reply> replies = dto.getRepliesId()
@@ -94,9 +99,9 @@ public interface UserMapper {
                     .toList();
             user.setReplies(replies);
         }
-//        else {
-//            user.setReplies(new ArrayList<>());
-//        }
+        else {
+            user.setReplies(new ArrayList<>());
+        }
     }
 
     @Named("userById")

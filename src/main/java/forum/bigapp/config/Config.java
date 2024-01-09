@@ -1,7 +1,9 @@
 package forum.bigapp.config;
 
+import org.springframework.context.annotation.Configuration;
 import java.time.format.DateTimeFormatter;
 
+@Configuration
 public class Config {
     public static final DateTimeFormatter format
             = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

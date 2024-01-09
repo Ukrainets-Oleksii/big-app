@@ -36,8 +36,10 @@ public class ReplyServiceImpl implements ReplyService {
 
     @Override
     public Reply update(Long id, Reply entity) {
-        entity.setId(id);
-        return repository.save(entity);
+        Reply reply = getByID(id);
+        reply.setContent(entity.getContent());
+
+        return repository.save(reply);
     }
 
     @Override

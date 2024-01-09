@@ -36,8 +36,10 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment update(Long id, Comment entity) {
-        entity.setId(id);
-        return repository.save(entity);
+        Comment comment = getByID(id);
+        comment.setContent(entity.getContent());
+
+        return repository.save(comment);
     }
 
     @Override
