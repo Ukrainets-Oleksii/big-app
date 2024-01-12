@@ -1,6 +1,5 @@
 package forum.bigapp.security.config;
 
-import forum.bigapp.model.Role;
 import forum.bigapp.security.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

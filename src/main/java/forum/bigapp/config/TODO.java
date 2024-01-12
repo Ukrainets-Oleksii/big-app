@@ -1,6 +1,9 @@
 package forum.bigapp.config;
 
 public class TODO {
+    //TODO SessionManager and Session for users
+    //TODO add tegs topics
+    //TODO create findByOwner for comments and topics and replies
     //TODO Validations - completed
     //TODO Role - completed
     //TODO Exception Handler

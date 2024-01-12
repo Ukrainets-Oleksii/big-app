@@ -22,6 +22,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User saveAdmin(User user) {
+        user.getRoles().add(roleService.getByRoleName(Role.RoleName.ADMIN));
+        return repository.save(user);
+    }
+
+    @Override
     public User getByID(Long id) {
         return repository.getReferenceById(id);
     }

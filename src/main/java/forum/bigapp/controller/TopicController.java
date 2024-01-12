@@ -28,6 +28,7 @@ public class TopicController {
         return mapper.toDto(service.save(mapper.toModel(dto)));
     }
 
+    @Deprecated
     @GetMapping("/findAll")
     public List<TopicResponseDto> findAll() {
         return service.findAll().stream()
@@ -35,11 +36,13 @@ public class TopicController {
                 .toList();
     }
 
+    @Deprecated
     @GetMapping("/{id}")
     public TopicResponseDto findById(@PathVariable Long id) {
         return mapper.toDto(service.getByID(id));
     }
 
+    @Deprecated
     @PutMapping("/{id}")
     public TopicResponseDto update(@PathVariable Long id,
                                    @RequestBody @Valid TopicRequestDto requestDto) {
