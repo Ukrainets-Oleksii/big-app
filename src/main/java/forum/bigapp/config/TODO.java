@@ -2,7 +2,7 @@ package forum.bigapp.config;
 
 public class TODO {
     //TODO Validations - completed
-    //TODO Role
+    //TODO Role - completed
     //TODO Exception Handler
     //TODO Spring Security
     //TODO Registration and Authentications

@@ -8,8 +8,6 @@ import forum.bigapp.exception.RegistrationException;
 import forum.bigapp.mapper.UserMapper;
 import forum.bigapp.model.Role;
 import forum.bigapp.model.User;
-import forum.bigapp.repository.RoleRepository;
-import forum.bigapp.repository.UserRepository;
 import forum.bigapp.security.jwt.JwtUtil;
 import forum.bigapp.service.AuthenticationService;
 import forum.bigapp.service.RoleService;
@@ -48,7 +46,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public UserLoginResponseDto login(UserLoginRequestDto request) {
         final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
                 );
         String token = jwtUtil.generateToken(authentication.getName());
         return new UserLoginResponseDto(token);

@@ -5,4 +5,6 @@ import java.util.Optional;
 
 public interface UserService extends GenericService<User> {
     Optional<User> findByEmail(String email);
+
+    Optional<User> findByUsername(String username);
 }

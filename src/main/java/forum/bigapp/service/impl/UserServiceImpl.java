@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(User entity) {
         Role role = new Role();
-        role.setRoleName(Role.RoleName.ADMIN);
+        role.setRoleName(Role.RoleName.ADMIN); //TODO!!!!!
         roleService.save(role);
         entity.addRole(role);
         return repository.save(entity);
@@ -33,6 +33,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findByEmail(String email) {
         return repository.findByEmail(email);
+    }
+
+    @Override
+    public Optional<User> findByUsername(String username) {
+        return repository.findByUsername(username);
     }
 
     @Override
