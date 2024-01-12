@@ -12,10 +12,8 @@ import forum.bigapp.mapper.CommentMapper;
 import forum.bigapp.mapper.ReplyMapper;
 import forum.bigapp.mapper.TopicMapper;
 import forum.bigapp.mapper.UserMapper;
-import forum.bigapp.service.CommentService;
-import forum.bigapp.service.ReplyService;
-import forum.bigapp.service.TopicService;
-import forum.bigapp.service.UserService;
+import forum.bigapp.model.Role;
+import forum.bigapp.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,11 +32,25 @@ public class TestController {
     private final ReplyService replyService;
     private final UserService userService;
     private final TopicService topicService;
+    private final RoleService roleService;
 
     private final CommentMapper commentMapper;
     private final ReplyMapper replyMapper;
     private final UserMapper userMapper;
     private final TopicMapper topicMapper;
+
+    @GetMapping("/insert")
+    public String insert(){
+        Role roleAdmin = new Role();
+        roleAdmin.setRoleName(Role.RoleName.ADMIN);
+        Role roleUser = new Role();
+        roleUser.setRoleName(Role.RoleName.USER);
+
+        roleService.save(roleAdmin);
+        roleService.save(roleUser);
+
+        return "Complete";
+    }
 
     @PostMapping("/create/user")
     public UserResponseDto createUser(@RequestBody UserRequestDto dto) {

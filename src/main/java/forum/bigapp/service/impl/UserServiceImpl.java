@@ -18,10 +18,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User entity) {
-        Role role = new Role();
-        role.setRoleName(Role.RoleName.ADMIN); //TODO!!!!!
-        roleService.save(role);
-        entity.addRole(role);
         return repository.save(entity);
     }
 

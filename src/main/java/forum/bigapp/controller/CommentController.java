@@ -6,7 +6,6 @@ import forum.bigapp.mapper.CommentMapper;
 import forum.bigapp.service.CommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +27,6 @@ public class CommentController {
     public CommentResponseDto create(
             @RequestBody @Valid CommentRequestDto dto) {
         return mapper.toDto(service.save(mapper.toModel(dto)));
-        //TODO пофіксити зберігання комента без юзера like update
     }
 
     @GetMapping("/findAll")
