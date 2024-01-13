@@ -13,21 +13,27 @@ import forum.bigapp.mapper.ReplyMapper;
 import forum.bigapp.mapper.TopicMapper;
 import forum.bigapp.mapper.UserMapper;
 import forum.bigapp.model.Role;
-import forum.bigapp.service.*;
+import forum.bigapp.model.User;
+import forum.bigapp.service.CommentService;
+import forum.bigapp.service.ReplyService;
+import forum.bigapp.service.RoleService;
+import forum.bigapp.service.TopicService;
+import forum.bigapp.service.UserService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/test")
 @RestController
 public class TestController {
+    @Value("${jwt.secret}")
+    private String jwtSecret;
+
     private final CommentService commentService;
     private final ReplyService replyService;
     private final UserService userService;
@@ -50,6 +56,42 @@ public class TestController {
         roleService.save(roleUser);
 
         return "Complete";
+    }
+
+    @GetMapping("/testIdFromJwtToken") //TODO
+    public List<TopicResponseDto> testIdFromJwtToken(@RequestHeader("Authorization") String authorizationHeader) {
+        String token = authorizationHeader.substring(7);
+        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+        String userId = claims.getSubject();
+
+        User user = userService.getByID(Long.parseLong(userId));
+        return topicService.findTopicsByOwner(user).stream()
+                .map(topicMapper::toDto)
+                .toList();
+    }
+
+    @GetMapping("/find/topicByOwner/{id}")
+    public List<TopicResponseDto> findTopicsByOwner(@PathVariable Long id) {
+        User user = userService.getByID(id);
+        return topicService.findTopicsByOwner(user).stream()
+                .map(topicMapper::toDto)
+                .toList();
+    }
+
+    @GetMapping("/find/commentByOwner/{id}")
+    public List<CommentResponseDto> findCommentsByOwner(@PathVariable Long id) {
+        User user = userService.getByID(id);
+        return commentService.findCommentsByOwner(user).stream()
+                .map(commentMapper::toDto)
+                .toList();
+    }
+
+    @GetMapping("/find/repliesByOwner/{id}")
+    public List<ReplyResponseDto> findRepliesByOwner(@PathVariable Long id) {
+        User user = userService.getByID(id);
+        return replyService.findRepliesByOwner(user).stream()
+                .map(replyMapper::toDto)
+                .toList();
     }
 
     @PostMapping("/create/user")

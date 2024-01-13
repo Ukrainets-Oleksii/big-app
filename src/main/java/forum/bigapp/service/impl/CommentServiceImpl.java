@@ -35,6 +35,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public List<Comment> findCommentsByOwner(User user) {
+        return repository.findCommentsByOwner(user);
+    }
+
+    @Override
     public Comment update(Long id, Comment entity) {
         Comment comment = getByID(id);
         comment.setContent(entity.getContent());

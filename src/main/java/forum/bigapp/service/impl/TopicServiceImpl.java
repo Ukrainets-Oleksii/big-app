@@ -31,6 +31,11 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
+    public List<Topic> findTopicsByOwner(User user) {
+        return repository.getTopicsByOwner(user);
+    }
+
+    @Override
     public Topic update(Long id, Topic entity) {
         Topic topic = getByID(id);
         topic.setContent(entity.getContent());

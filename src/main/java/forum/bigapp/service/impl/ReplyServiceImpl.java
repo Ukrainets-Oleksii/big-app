@@ -35,6 +35,11 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
+    public List<Reply> findRepliesByOwner(User user) {
+        return repository.findRepliesByOwner(user);
+    }
+
+    @Override
     public Reply update(Long id, Reply entity) {
         Reply reply = getByID(id);
         reply.setContent(entity.getContent());
