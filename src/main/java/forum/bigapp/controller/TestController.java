@@ -14,25 +14,28 @@ import forum.bigapp.mapper.TopicMapper;
 import forum.bigapp.mapper.UserMapper;
 import forum.bigapp.model.Role;
 import forum.bigapp.model.User;
+import forum.bigapp.security.jwt.JwtUtil;
 import forum.bigapp.service.CommentService;
 import forum.bigapp.service.ReplyService;
 import forum.bigapp.service.RoleService;
 import forum.bigapp.service.TopicService;
 import forum.bigapp.service.UserService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/test")
 @RestController
 public class TestController {
-    @Value("${jwt.secret}")
-    private String jwtSecret;
+    private final JwtUtil jwtUtil;
 
     private final CommentService commentService;
     private final ReplyService replyService;
@@ -59,12 +62,12 @@ public class TestController {
     }
 
     @GetMapping("/testIdFromJwtToken") //TODO
-    public List<TopicResponseDto> testIdFromJwtToken(@RequestHeader("Authorization") String authorizationHeader) {
+    public List<TopicResponseDto> testIdFromJwtToken(
+            @RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.substring(7);
-        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
-        String userId = claims.getSubject();
+        String username = jwtUtil.getUsername(token);
 
-        User user = userService.getByID(Long.parseLong(userId));
+        User user = userService.findByUsername(username).get();
         return topicService.findTopicsByOwner(user).stream()
                 .map(topicMapper::toDto)
                 .toList();

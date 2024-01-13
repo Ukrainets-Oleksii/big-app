@@ -1,6 +1,8 @@
 package forum.bigapp.config;
 
 public class TODO {
+    //TODO Flag edited
+    //TODO Like and Dislike for comment, topic and reply
     //TODO SessionManager and Session for users
     //TODO add tegs topics
     //TODO create findByOwner for comments and topics and replies
