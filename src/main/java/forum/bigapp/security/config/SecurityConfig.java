@@ -1,6 +1,6 @@
 package forum.bigapp.security.config;
 
-import forum.bigapp.security.jwt.JwtAuthenticationFilter;
+import forum.bigapp.filter.JwtTokenCookieFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +24,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final UserDetailsService userDetailsService;
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtTokenCookieFilter jwtTokenCookieFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -47,8 +47,7 @@ public class SecurityConfig {
                 .httpBasic(withDefaults())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthenticationFilter,
-                        UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtTokenCookieFilter, UsernamePasswordAuthenticationFilter.class)
                 .userDetailsService(userDetailsService)
                 .build();
     }

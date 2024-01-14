@@ -1,6 +1,7 @@
 package forum.bigapp.config;
 
 public class TODO {
+    //TODO Cookies - completed!!!!!!!
     //TODO Flag edited
     //TODO Like and Dislike for comment, topic and reply
     //TODO SessionManager and Session for users

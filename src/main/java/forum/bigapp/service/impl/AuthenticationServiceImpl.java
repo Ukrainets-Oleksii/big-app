@@ -1,8 +1,8 @@
 package forum.bigapp.service.impl;
 
+import forum.bigapp.config.CookieUtil;
 import forum.bigapp.dto.request.UserLoginRequestDto;
 import forum.bigapp.dto.request.UserRegistrationRequestDto;
-import forum.bigapp.dto.response.UserLoginResponseDto;
 import forum.bigapp.dto.response.UserRegistrationResponseDto;
 import forum.bigapp.exception.RegistrationException;
 import forum.bigapp.mapper.UserMapper;
@@ -12,6 +12,7 @@ import forum.bigapp.security.jwt.JwtUtil;
 import forum.bigapp.service.AuthenticationService;
 import forum.bigapp.service.RoleService;
 import forum.bigapp.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -44,11 +45,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public UserLoginResponseDto login(UserLoginRequestDto request) {
+    public void login(UserLoginRequestDto request,
+                      HttpServletResponse response) {
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
                 );
         String token = jwtUtil.generateToken(authentication.getName());
-        return new UserLoginResponseDto(token);
+
+        CookieUtil.setJwtTokenToCookie(token, response);
     }
 }

@@ -3,7 +3,6 @@ package forum.bigapp.controller;
 import forum.bigapp.dto.request.UserRequestDto;
 import forum.bigapp.dto.response.UserResponseDto;
 import forum.bigapp.mapper.UserMapper;
-import forum.bigapp.model.Role;
 import forum.bigapp.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,9 +30,9 @@ public class UserController {
         return mapper.toDto(service.saveAdmin(mapper.toModel(dto)));
     }
 
-    @GetMapping("/{id}")
-    public UserResponseDto findById(@PathVariable Long id) {
-        return mapper.toDto(service.getByID(id));
+    @GetMapping("findByUsername/{username}")
+    public UserResponseDto findById(@PathVariable String username) {
+        return mapper.toDto(service.findByUsername(username).get());
     }
 
     @Deprecated //TODO
