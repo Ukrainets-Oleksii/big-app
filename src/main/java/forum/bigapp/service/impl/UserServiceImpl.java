@@ -1,6 +1,6 @@
 package forum.bigapp.service.impl;
 
-import forum.bigapp.config.CookieUtil;
+import forum.bigapp.exception.DataProcessingException;
 import forum.bigapp.model.Role;
 import forum.bigapp.model.User;
 import forum.bigapp.repository.UserRepository;
@@ -9,9 +9,9 @@ import forum.bigapp.service.RoleService;
 import forum.bigapp.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,20 +59,6 @@ public class UserServiceImpl implements UserService {
         return repository.save(user);
     }
 
-//    @Override
-//    public User update(Long id, HttpServletRequest request, User entity) {
-//        Cookie jwtCookie = CookieUtil.findJwtCookie(request);
-//        String username = jwtUtil.getUsername(jwtCookie.getValue());
-//        User user = findByUsername(username).get();
-//
-//        user.setEmail(entity.getEmail());
-//        user.setUsername(entity.getUsername());
-//        user.setPassword(entity.getPassword());
-//        user.setDescription(entity.getDescription());
-//
-//        return repository.save(user);
-//    }
-
     @Override
     public List<User> findAll() {
         return repository.findAll();
@@ -83,5 +69,22 @@ public class UserServiceImpl implements UserService {
         User user = getByID(id);
         user.setDeleted(true);
         update(id, user);
+    }
+
+    @Override
+    public Long getIdFromJwtToken(HttpServletRequest request) {
+        String token = Arrays.stream(request.getCookies())
+                .filter(e -> e.getName().equals("jwtToken"))
+                .map(Cookie::getValue)
+                .findFirst()
+                .orElse(null);
+
+        String username = jwtUtil.getUsername(token);
+
+        User user = findByUsername(username)
+                .orElseThrow(() -> new DataProcessingException(
+                        "Can't find user by username: " + username));
+
+        return user.getId();
     }
 }

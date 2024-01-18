@@ -20,15 +20,15 @@ public class AuthenticationController {
     private final AuthenticationService service;
 
     @PostMapping("/login")
-    public void login(@RequestBody @Valid UserLoginRequestDto request,
+    public void login(@RequestBody @Valid UserLoginRequestDto dto,
                                       HttpServletResponse response) {
-        service.login(request, response);
+        service.login(dto, response);
     }
 
     @PostMapping("/register")
     public UserRegistrationResponseDto register(@RequestBody @Valid
-                                                    UserRegistrationRequestDto request)
+                                                    UserRegistrationRequestDto dto)
             throws RegistrationException {
-        return service.register(request);
+        return service.register(dto);
     }
 }

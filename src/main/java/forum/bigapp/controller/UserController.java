@@ -2,6 +2,7 @@ package forum.bigapp.controller;
 
 import forum.bigapp.dto.request.UserRequestDto;
 import forum.bigapp.dto.response.UserResponseDto;
+import forum.bigapp.exception.DataProcessingException;
 import forum.bigapp.mapper.UserMapper;
 import forum.bigapp.service.UserService;
 import jakarta.validation.Valid;
@@ -32,7 +33,8 @@ public class UserController {
 
     @GetMapping("findByUsername/{username}")
     public UserResponseDto findById(@PathVariable String username) {
-        return mapper.toDto(service.findByUsername(username).get());
+        return mapper.toDto(service.findByUsername(username)
+                .orElseThrow(() -> new DataProcessingException("Can't find user by id")));
     }
 
     @Deprecated //TODO
