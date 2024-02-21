@@ -52,10 +52,10 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public Reply update(Long id, Reply entity) {
+    public Reply update(Long id, Reply update) {
         Reply reply = getByID(id);
-        reply.setContent(entity.getContent());
-
+        setFlag(reply, update);
+        reply.setContent(update.getContent());
         return repository.save(reply);
     }
 
@@ -81,6 +81,12 @@ public class ReplyServiceImpl implements ReplyService {
         User user = userService.getByID(entity.getOwner().getId());
         user.getReplies().add(entity);
         userService.update(user.getId(), user);
+    }
+
+    private void setFlag(Reply entity, Reply update) {
+        if (!(entity.getContent().equals(update.getContent()))) {
+            entity.setFlagEditedContent(true);
+        }
     }
 }
 

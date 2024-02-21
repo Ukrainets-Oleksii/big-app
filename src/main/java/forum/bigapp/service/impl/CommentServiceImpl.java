@@ -51,10 +51,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment update(Long id, Comment entity) {
+    public Comment update(Long id, Comment update) {
         Comment comment = getByID(id);
-        comment.setContent(entity.getContent());
-
+        setFlag(comment, update);
+        comment.setContent(update.getContent());
         return repository.save(comment);
     }
 
@@ -80,5 +80,11 @@ public class CommentServiceImpl implements CommentService {
         Topic topic = topicService.getByID(entity.getTopic().getId());
         topic.getComments().add(entity);
         topicService.update(topic.getId(), topic);
+    }
+
+    private void setFlag(Comment entity, Comment update) {
+        if (!(entity.getContent().equals(update.getContent()))) {
+            entity.setFlagEditedContent(true);
+        }
     }
 }
