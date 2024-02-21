@@ -48,10 +48,10 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public Topic update(Long id, Topic entity) {
+    public Topic update(Long id, Topic update) {
         Topic topic = getByID(id);
-        topic.setContent(entity.getContent());
-
+        setFlag(topic, update);
+        topic.setContent(update.getContent());
         return repository.save(topic);
     }
 
@@ -71,5 +71,12 @@ public class TopicServiceImpl implements TopicService {
         User user = userService.getByID(entity.getOwner().getId());
         user.getTopics().add(entity);
         userService.update(user.getId(), user);
+    }
+
+    //TODO
+    private void setFlag(Topic entity, Topic update) {
+        if (!(entity.getContent().equals(update.getContent()))) {
+            entity.setFlagEditedContent(true);
+        }
     }
 }
