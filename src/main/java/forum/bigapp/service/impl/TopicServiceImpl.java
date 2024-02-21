@@ -6,6 +6,7 @@ import forum.bigapp.model.User;
 import forum.bigapp.repository.TopicRepository;
 import forum.bigapp.service.TopicService;
 import forum.bigapp.service.UserService;
+import forum.bigapp.service.manager.EmotionsManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ import java.util.List;
 public class TopicServiceImpl implements TopicService {
     private final TopicRepository repository;
     private final UserService userService;
+    private final EmotionsManager<Topic> emotionsManager;
 
     @Override
     public Topic save(Topic entity) {
@@ -33,6 +35,16 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public List<Topic> findTopicsByOwner(User user) {
         return repository.getTopicsByOwner(user);
+    }
+
+    //TODO how to get topic for add emotion
+    @Override
+    public void doEmotion(Long topicId, String username) {
+        Topic topic = getByID(topicId);
+        emotionsManager.doEmotion(topic, username); //TODO!!!!!!!!!!
+        topic.setCountOfEmotions(
+                emotionsManager.getCountOfEmotionsForEntity(topic));
+        update(topicId, topic);
     }
 
     @Override

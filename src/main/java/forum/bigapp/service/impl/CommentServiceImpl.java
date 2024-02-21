@@ -8,6 +8,7 @@ import forum.bigapp.repository.CommentRepository;
 import forum.bigapp.service.CommentService;
 import forum.bigapp.service.TopicService;
 import forum.bigapp.service.UserService;
+import forum.bigapp.service.manager.EmotionsManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository repository;
     private final UserService userService;
     private final TopicService topicService;
+    private final EmotionsManager<Comment> emotionsManager;
 
     @Override
     public Comment save(Comment entity) {
@@ -37,6 +39,15 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<Comment> findCommentsByOwner(User user) {
         return repository.findCommentsByOwner(user);
+    }
+
+    //TODO how to get topic for add emotion
+    @Override
+    public void doEmotion(Long commentId, String username) {
+        Comment comment = getByID(commentId);
+        emotionsManager.doEmotion(comment, username);
+        comment.setCountOfEmotions(
+                emotionsManager.getCountOfEmotionsForEntity(comment));
     }
 
     @Override

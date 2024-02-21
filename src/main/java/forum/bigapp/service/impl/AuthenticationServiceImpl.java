@@ -17,8 +17,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 @Service
 @RequiredArgsConstructor
@@ -46,12 +48,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public void login(UserLoginRequestDto request,
-                      HttpServletResponse response) {
+                      HttpServletResponse response) throws AuthenticationException {
         final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
-                );
-        String token = jwtUtil.generateToken(authentication.getName());
+                new UsernamePasswordAuthenticationToken(
+                        request.getUsername(), request.getPassword()));
 
+        String token = jwtUtil.generateToken(authentication.getName());
         CookieUtil.setJwtTokenToCookie(token, response);
     }
 }
