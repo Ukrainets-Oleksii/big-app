@@ -6,6 +6,8 @@ import forum.bigapp.mapper.TopicMapper;
 import forum.bigapp.service.TopicService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +28,16 @@ public class TopicController {
     @PostMapping("/create")
     public TopicResponseDto create(@RequestBody @Valid TopicRequestDto dto) {
         return mapper.toDto(service.save(mapper.toModel(dto)));
+    }
+
+    @GetMapping("/doEmotionForTopic/{id}")
+    public void doEmotionForTopic(
+            @AuthenticationPrincipal UserDetails userDetails, //TODO
+            @PathVariable Long id) {
+
+        String username = userDetails.getUsername();
+
+        service.doEmotion(id, username); //TODO!!!!!!!!!!!!!
     }
 
     @Deprecated

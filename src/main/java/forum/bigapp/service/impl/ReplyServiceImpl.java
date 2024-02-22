@@ -8,7 +8,9 @@ import forum.bigapp.repository.ReplyRepository;
 import forum.bigapp.service.CommentService;
 import forum.bigapp.service.ReplyService;
 import forum.bigapp.service.UserService;
+import forum.bigapp.service.manager.EmotionsManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,6 +21,7 @@ public class ReplyServiceImpl implements ReplyService {
     private final ReplyRepository repository;
     private final CommentService commentService;
     private final UserService userService;
+    private final EmotionsManager<Reply> emotionsManager;
 
     @Override
     public Reply save(Reply entity) {
@@ -39,11 +42,20 @@ public class ReplyServiceImpl implements ReplyService {
         return repository.findRepliesByOwner(user);
     }
 
+    //TODO how to get topic for add emotion
     @Override
-    public Reply update(Long id, Reply entity) {
-        Reply reply = getByID(id);
-        reply.setContent(entity.getContent());
+    public void doEmotion(Long replyId, String username) {
+        Reply reply = getByID(replyId);
+        emotionsManager.doEmotion(reply, username);
+        reply.setCountOfEmotions(
+                emotionsManager.getCountOfEmotionsForEntity(reply));
+    }
 
+    @Override
+    public Reply update(Long id, Reply update) {
+        Reply reply = getByID(id);
+        setFlag(reply, update);
+        reply.setContent(update.getContent());
         return repository.save(reply);
     }
 
@@ -69,6 +81,12 @@ public class ReplyServiceImpl implements ReplyService {
         User user = userService.getByID(entity.getOwner().getId());
         user.getReplies().add(entity);
         userService.update(user.getId(), user);
+    }
+
+    private void setFlag(Reply entity, Reply update) {
+        if (!(entity.getContent().equals(update.getContent()))) {
+            entity.setFlagEditedContent(true);
+        }
     }
 }
 

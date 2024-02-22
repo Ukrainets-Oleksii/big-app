@@ -8,6 +8,7 @@ import forum.bigapp.repository.CommentRepository;
 import forum.bigapp.service.CommentService;
 import forum.bigapp.service.TopicService;
 import forum.bigapp.service.UserService;
+import forum.bigapp.service.manager.EmotionsManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository repository;
     private final UserService userService;
     private final TopicService topicService;
+    private final EmotionsManager<Comment> emotionsManager;
 
     @Override
     public Comment save(Comment entity) {
@@ -39,11 +41,20 @@ public class CommentServiceImpl implements CommentService {
         return repository.findCommentsByOwner(user);
     }
 
+    //TODO how to get topic for add emotion
     @Override
-    public Comment update(Long id, Comment entity) {
-        Comment comment = getByID(id);
-        comment.setContent(entity.getContent());
+    public void doEmotion(Long commentId, String username) {
+        Comment comment = getByID(commentId);
+        emotionsManager.doEmotion(comment, username);
+        comment.setCountOfEmotions(
+                emotionsManager.getCountOfEmotionsForEntity(comment));
+    }
 
+    @Override
+    public Comment update(Long id, Comment update) {
+        Comment comment = getByID(id);
+        setFlag(comment, update);
+        comment.setContent(update.getContent());
         return repository.save(comment);
     }
 
@@ -69,5 +80,11 @@ public class CommentServiceImpl implements CommentService {
         Topic topic = topicService.getByID(entity.getTopic().getId());
         topic.getComments().add(entity);
         topicService.update(topic.getId(), topic);
+    }
+
+    private void setFlag(Comment entity, Comment update) {
+        if (!(entity.getContent().equals(update.getContent()))) {
+            entity.setFlagEditedContent(true);
+        }
     }
 }

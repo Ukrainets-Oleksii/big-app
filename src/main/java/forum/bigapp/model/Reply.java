@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
 
@@ -16,12 +17,16 @@ import org.hibernate.annotations.Where;
 @Where(clause = "is_deleted = false")
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Reply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
     private String timestamp;
+    private int countOfEmotions;
+    @Column(columnDefinition = "BOOLEAN DEFAULT false")
+    private boolean flagEditedContent;
     @Column(name = "is_deleted", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean isDeleted;
     @ManyToOne
