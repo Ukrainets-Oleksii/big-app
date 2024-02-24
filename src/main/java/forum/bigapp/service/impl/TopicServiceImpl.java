@@ -37,7 +37,6 @@ public class TopicServiceImpl implements TopicService {
         return repository.getTopicsByOwner(user);
     }
 
-    //TODO how to get topic for add emotion
     @Override
     public void doEmotion(Long topicId, String username) {
         Topic topic = getByID(topicId);

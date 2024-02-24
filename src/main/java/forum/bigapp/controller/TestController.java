@@ -20,6 +20,7 @@ import forum.bigapp.service.RoleService;
 import forum.bigapp.service.TopicService;
 import forum.bigapp.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -74,8 +75,7 @@ public class TestController {
         roleAdmin.setRoleName(Role.RoleName.ADMIN);
         Role roleUser = new Role();
         roleUser.setRoleName(Role.RoleName.USER);
-
-        roleService.save(roleAdmin);
+       roleService.save(roleAdmin);
         roleService.save(roleUser);
 
         return "Complete";

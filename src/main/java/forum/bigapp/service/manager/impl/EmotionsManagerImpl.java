@@ -10,7 +10,6 @@ public class EmotionsManagerImpl<T> implements EmotionsManager<T> {
     public final Map<T, Map<String, Boolean>> emotionsMap = new HashMap<>();
 
     //TODO!!!
-
     @Override
     public void doEmotion(T entity, String username) {
         if (!hasEmotion(entity, username)) {
@@ -40,7 +39,6 @@ public class EmotionsManagerImpl<T> implements EmotionsManager<T> {
         if (!emotionsMap.containsKey(entity)) {
             emotionsMap.put(entity, new HashMap<>());
         }
-        return emotionsMap.containsKey(entity)
-                && emotionsMap.get(entity).containsKey(username);
+        return emotionsMap.get(entity).containsKey(username);
     }
 }

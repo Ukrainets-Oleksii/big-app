@@ -8,6 +8,7 @@ public class ReplyResponseDto {
     private String content;
     private String timestamp;
     private int countOfEmotions;
+    private boolean flagEditedContent;
     private Long headCommentId;
     private Long ownerId;
 }

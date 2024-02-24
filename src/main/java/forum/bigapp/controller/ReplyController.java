@@ -6,6 +6,7 @@ import forum.bigapp.mapper.ReplyMapper;
 import forum.bigapp.service.ReplyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,6 +40,15 @@ public class ReplyController {
     @GetMapping("/{id}")
     public ReplyResponseDto findById(@PathVariable Long id) {
         return mapper.toDto(service.getByID(id));
+    }
+
+    @GetMapping("/doEmotion/{id}")
+    public String doEmotion(
+            Authentication authentication, //TODO
+            @PathVariable Long id) {
+        String username = authentication.getName();
+        service.doEmotion(id, username); //TODO!!!!!!!!!!!!!
+        return "Completed!";
     }
 
     @PutMapping("/{id}")

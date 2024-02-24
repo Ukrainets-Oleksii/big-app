@@ -6,6 +6,7 @@ import forum.bigapp.mapper.TopicMapper;
 import forum.bigapp.service.TopicService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -52,6 +53,15 @@ public class TopicController {
     @GetMapping("/{id}")
     public TopicResponseDto findById(@PathVariable Long id) {
         return mapper.toDto(service.getByID(id));
+    }
+
+    @GetMapping("/doEmotion/{id}")
+    public String doEmotionForTopic(
+            Authentication authentication, //TODO
+            @PathVariable Long id) {
+        String username = authentication.getName();
+        service.doEmotion(id, username); //TODO!!!!!!!!!!!!!
+        return "Completed!";
     }
 
     @Deprecated
