@@ -26,4 +26,13 @@ public class CookieUtil {
         }
         return null;
     }
+
+    public static void deleteCookie(HttpServletResponse response, HttpServletRequest request) {
+        Cookie cookie = findJwtCookie(request);
+        if (cookie != null) {
+            cookie.setMaxAge(0);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+        }
+    }
 }

@@ -32,7 +32,7 @@ public class TopicController {
     }
 
     @GetMapping("/doEmotionForTopic/{id}")
-    public void doEmotionForTopic(
+    public void doEmotion(
             @AuthenticationPrincipal UserDetails userDetails, //TODO
             @PathVariable Long id) {
 
