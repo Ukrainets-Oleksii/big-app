@@ -3,7 +3,6 @@ package forum.bigapp.controller;
 import forum.bigapp.dto.request.UserLoginRequestDto;
 import forum.bigapp.dto.request.UserRegistrationRequestDto;
 import forum.bigapp.dto.response.UserRegistrationResponseDto;
-import forum.bigapp.exception.RegistrationException;
 import forum.bigapp.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
